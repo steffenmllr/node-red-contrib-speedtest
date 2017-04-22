@@ -1,0 +1,38 @@
+<script type="text/javascript">
+RED.nodes.registerType('speedtest', {
+    category: 'input',
+    color: '#28AFB0',
+    defaults: {
+        name: {
+            value: ''
+        },
+        maxTime: {
+            value: 5 * 1000
+        }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'white-globe.png',
+    label: function() {
+        return this.name || 'speedtest';
+    }
+});
+</script>
+
+<script type="text/x-red" data-template-name="speedtest">
+    <div class="form-row">
+        <label for="node-input-maxTime"><i class="fa fa-hourglass-end"></i> MaxTime (ms)</label>
+        <input type="text" id="node-input-maxTime" placeholder="50000">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="speedtest">
+    <p>
+        A <a href="https://github.com/ddsol/speedtest.net">speedtest.net</a> node.
+    </p>
+</script>
