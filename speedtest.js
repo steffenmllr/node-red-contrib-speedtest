@@ -12,9 +12,12 @@ module.exports = exports = function(RED) {
             var test = speedTest({ maxTime: config.maxTime });
 
             test.on('data', data => {
-                var reponse = Object.assign({}, data, { config: config });
+                var response = Object.assign({}, data, { config: config });
                 this.status({});
-                this.send({ payload: reponse });
+
+                msg.payload = response;
+
+                this.send(msg);
             });
 
             test.on('error', err => {
