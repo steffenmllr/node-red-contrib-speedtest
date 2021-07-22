@@ -1,28 +1,35 @@
-'use strict';
+"use strict";
 
-var speedTest = require('speedtest-net');
+var speedTest = require("speedtest-net");
 
-module.exports = exports = function(RED) {
+module.exports = exports = function (RED) {
     function SpeedTest(config) {
-        var timeout = config.maxTime || 5 * 1000;
         RED.nodes.createNode(this, config);
-
-        this.on('input', msg => {
-            this.status({ fill: 'yellow', shape: 'dot', text: 'Requesting' });
-            var test = speedTest({ maxTime: config.maxTime });
-
-            test.on('data', data => {
-                var reponse = Object.assign({}, data, { config: config });
-                this.status({});
-                this.send({ payload: reponse });
-            });
-
-            test.on('error', err => {
-                this.status({ fill: 'red', shape: 'dot', text: err.message });
-                this.error(err, msg);
-            });
+        this.on("input", function (msg) {
+            const node = this;
+            const { acceptLicense, serverId, acceptGdpr, maxTime } = config;
+            node.status({ fill: "yellow", shape: "dot", text: "Requesting" });
+            speedTest({
+                acceptLicense,
+                acceptGdpr,
+                serverId,
+                maxTime,
+            })
+                .then((result) => {
+                    msg.payload = Object.assign({}, result, { config: config });
+                    node.status({ fill: "green", shape: "dot" });
+                    node.send(msg);
+                })
+                .catch((err) => {
+                    node.status({
+                        fill: "red",
+                        shape: "dot",
+                        text: err.message,
+                    });
+                    node.error(err, msg);
+                });
         });
     }
 
-    RED.nodes.registerType('speedtest', SpeedTest);
+    RED.nodes.registerType("speedtest", SpeedTest);
 };
