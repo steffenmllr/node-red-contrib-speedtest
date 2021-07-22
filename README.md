@@ -1,4 +1,4 @@
-> maintainer needed - If you want to maintain this module, please open a PR
+> maintainer needed - If you want to maintain this module, please open an Issue
 
 
 
