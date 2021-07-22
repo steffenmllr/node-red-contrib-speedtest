@@ -1,22 +1,31 @@
 <script type="text/javascript">
-RED.nodes.registerType('speedtest', {
-    category: 'input',
-    color: '#28AFB0',
-    defaults: {
-        name: {
-            value: ''
+    RED.nodes.registerType("speedtest", {
+        category: "input",
+        color: "#28AFB0",
+        defaults: {
+            name: {
+                value: "",
+            },
+            maxTime: {
+                value: 5 * 1000,
+            },
+            serverId: {
+                value: "",
+            },
+            acceptLicense: {
+                value: false,
+            },
+            acceptGdpr: {
+                value: false,
+            },
         },
-        maxTime: {
-            value: 5 * 1000
-        }
-    },
-    inputs: 1,
-    outputs: 1,
-    icon: 'white-globe.png',
-    label: function() {
-        return this.name || 'speedtest';
-    }
-});
+        inputs: 1,
+        outputs: 1,
+        icon: "white-globe.png",
+        label: function () {
+            return this.name || "speedtest";
+        },
+    });
 </script>
 
 <script type="text/x-red" data-template-name="speedtest">
@@ -29,10 +38,44 @@ RED.nodes.registerType('speedtest', {
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+    <div class="form-row">
+        <label for="node-input-serverId"><i class="icon-tag"></i> ServerId</label>
+        <input type="text" id="node-input-serverId" placeholder="leave empty for nearest">
+    </div>
+    <div class="form-row">
+        <p>
+            You may only use this Speedtest software and information generate from it for personal, non-commercial use, through a command line interface on a personal computer. Your use of this software is subject to the End User License Agreement, Terms of Use and Privacy Policy at these URLs:
+        </p>
+        <ul>
+             <li><a href="https://www.speedtest.net/about/eula" taget="_blank">https://www.speedtest.net/about/eula</a></li>
+             <li><a href="https://www.speedtest.net/about/terms" taget="_blank">https://www.speedtest.net/about/terms</a></li>
+             <li><a href="https://www.speedtest.net/about/privacy" taget="_blank">https://www.speedtest.net/about/privacy</a></li>
+        </ul>
+        <label for="node-input-acceptLicense"><i class="icon-tag"></i> Accept Terms</label>
+        <input type="checkbox" id="node-input-acceptLicense">
+    </div>
+    <div class="form-row">
+        <p>
+            Ookla collects certain data through Speedtest that may be considered
+            personally identifiable, such as your IP address, unique device
+            identifiers or location. Ookla believes it has a legitimate interest
+            to share this data with internet providers, hardware manufacturers and
+            industry regulators to help them understand and create a better and
+            faster internet. For further information including how the data may be
+            shared, where the data may be transferred and Ookla's contact details,
+            please see our Privacy Policy at:
+                   http://www.speedtest.net/privacy
+        </p>
+        <label for="node-input-acceptGdpr"><i class="icon-tag"></i> Accept Gdpr</label>
+        <input type="checkbox" id="node-input-acceptGdpr">
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="speedtest">
     <p>
         A <a href="https://github.com/ddsol/speedtest.net">speedtest.net</a> node.
+    </p>
+    <p>
+        List of id and other info is available <a href="https://www.speedtest.net/speedtest-servers-static.php">here</a>
     </p>
 </script>
